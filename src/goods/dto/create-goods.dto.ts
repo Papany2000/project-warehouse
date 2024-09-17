@@ -1,8 +1,10 @@
 import { ApiProperty } from '@nestjs/swagger';
 
 export class GoodsDTO {
-  @ApiProperty({ example: '1', description: 'идентификатор' })
-  readonly id: number;
+  @ApiProperty({ example: 'wer-345', description: 'идентификатор' })
+  readonly id: string;
+  @ApiProperty({ example: '1', description: 'идентификатор пользователя' })
+  readonly userId: string;
   @ApiProperty({ example: 'кольцо', description: 'изделие' })
   readonly name: string;
   @ApiProperty({ example: '3 шт', description: 'количество' })

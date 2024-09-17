@@ -2,6 +2,7 @@ import { ApiProperty } from '@nestjs/swagger';
 import { Model, Table, Column, DataType } from 'sequelize-typescript';
 
 interface GoodsCreationAttrs {
+  id: string;
   name: string;
   quantity: string;
   storageLocation: string;
@@ -9,14 +10,18 @@ interface GoodsCreationAttrs {
 
 @Table({ tableName: 'goods' })
 export class Goods extends Model<Goods, GoodsCreationAttrs> {
-  @ApiProperty({ example: 1, description: 'Уникальный идентификатор' })
+  @ApiProperty({ example: 'b231-c96', description: 'идентификатор' })
   @Column({
-    type: DataType.INTEGER,
-    unique: true,
-    autoIncrement: true,
+    type: DataType.STRING,
     primaryKey: true,
   })
-  id: number;
+  id: string;
+  @ApiProperty({ example: '1', description: 'идентификатор пользователя' })
+  @Column({
+    type: DataType.STRING,
+    primaryKey: true,
+  })
+  userId: string;
   @ApiProperty({ example: 'кольцо', description: 'изделие' })
   @Column({ type: DataType.STRING, allowNull: false })
   name: string;
