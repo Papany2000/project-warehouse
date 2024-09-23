@@ -19,7 +19,6 @@ export class Goods extends Model<Goods, GoodsCreationAttrs> {
   @ApiProperty({ example: '1', description: 'идентификатор пользователя' })
   @Column({
     type: DataType.STRING,
-    primaryKey: true,
   })
   userId: string;
   @ApiProperty({ example: 'кольцо', description: 'изделие' })
