@@ -1,11 +1,15 @@
-import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
+import { Module, RequestMethod, NestModule } from '@nestjs/common';
+import { MiddlewareConsumer } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
-import { GoodsModule } from './goods/goods.module';
-import { DatabaseModule } from './core/database/database.module';
+import { JwtModule } from '@nestjs/jwt';
+
 import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
+import { DatabaseModule } from './core/database/database.module';
+import { AppController } from './app.controller';
+import { AppService } from './app.service';
+import { GoodsModule } from './goods/goods.module';
+import { GoodsMiddleware } from './utils/goods.middleware';
 
 @Module({
   imports: [
@@ -16,8 +20,16 @@ import { AuthModule } from './auth/auth.module';
       isGlobal: true,
     }),
     AuthModule,
+    JwtModule.register({
+      secret: 'some-JWTKEY-token-key',
+      signOptions: { expiresIn: '1h' },
+    }),
   ],
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule {}
+export class AppModule implements NestModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer.apply(GoodsMiddleware).forRoutes({ path: 'goods', method: RequestMethod.ALL });
+  }
+}

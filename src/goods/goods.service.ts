@@ -1,8 +1,9 @@
+import { Sequelize } from 'sequelize-typescript';
 import { Inject } from '@nestjs/common';
+
+import { GOODS_REPOSITORY, SEQUELIZE } from '@/core/database/constant';
 import { Goods } from './goods.model';
 import { GoodsDTO } from './dto/create-goods.dto';
-import { GOODS_REPOSITORY, SEQUELIZE } from '@/core/database/constant';
-import { Sequelize } from 'sequelize-typescript';
 export class GoodsService {
   constructor(
     @Inject(SEQUELIZE) private readonly sequelize: Sequelize,
@@ -14,8 +15,10 @@ export class GoodsService {
     return goods;
   }
 
-  async getAllGoods() {
-    const goods = await this.goodsRepository.findAll();
+  async getAllGoods(userId) {
+    const goods = await this.goodsRepository.findAll({
+      where: { userId }
+    });
     return goods;
   }
 

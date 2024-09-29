@@ -1,8 +1,10 @@
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { Controller, Body, Post, Get, Param, Patch, Delete, Request } from '@nestjs/common';
+
+import { Goods } from './goods.model';
+import { RequestWithUser } from '@/utils/goods.middleware';
 import { GoodsDTO } from './dto/create-goods.dto';
 import { GoodsService } from './goods.service';
-import { Controller, Body, Post, Get, Param, Delete, Patch } from '@nestjs/common';
-import { Goods } from './goods.model';
 
 @ApiTags('Изделия')
 @Controller()
@@ -12,15 +14,16 @@ export class GoodsController {
   @ApiOperation({ summary: 'Создание изделия' })
   @ApiResponse({ status: 200, type: Goods })
   @Post('/goods')
-  create(@Body() goodsDTO: GoodsDTO) {
-    return this.goodsService.CreateGoods(goodsDTO);
+  create(@Request() req: RequestWithUser, @Body() goodsDTO: GoodsDTO) {
+    return this.goodsService.CreateGoods({ ...goodsDTO, userId: req.user.id });
   }
 
   @ApiOperation({ summary: 'Получение всех изделий' })
   @ApiResponse({ status: 200, type: Goods })
   @Get('/goods')
-  getGoods() {
-    return this.goodsService.getAllGoods();
+  getGoods(@Request() req: RequestWithUser) {
+    console.log(req.user.id)
+    return this.goodsService.getAllGoods(req.user.id);
   }
 
   @ApiOperation({ summary: 'Обновление данных' })

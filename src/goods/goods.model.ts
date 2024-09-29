@@ -3,6 +3,7 @@ import { Model, Table, Column, DataType } from 'sequelize-typescript';
 
 interface GoodsCreationAttrs {
   id: string;
+  userId: number;
   name: string;
   quantity: string;
   storageLocation: string;
@@ -16,11 +17,12 @@ export class Goods extends Model<Goods, GoodsCreationAttrs> {
     primaryKey: true,
   })
   id: string;
+
   @ApiProperty({ example: '1', description: 'идентификатор пользователя' })
   @Column({
-    type: DataType.STRING,
+    type: DataType.INTEGER,
   })
-  userId: string;
+  userId: number;
   @ApiProperty({ example: 'кольцо', description: 'изделие' })
   @Column({ type: DataType.STRING, allowNull: false })
   name: string;

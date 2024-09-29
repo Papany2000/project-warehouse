@@ -8,16 +8,16 @@ interface UserCreationAttrs {
 
 @Table({
   tableName: 'users',
-   timestamps: true,
+  timestamps: true,
   comment: 'Таблица пользователей',
   defaultScope: {
     attributes: { exclude: ['password'] },
   },
   scopes: {
     withPassword: {},
-  }, })
+  },
+})
 export class User extends Model<User, UserCreationAttrs> {
-  
   @ApiProperty({ example: 'baty', description: 'логин' })
   @Column({ type: DataType.STRING, unique: true, allowNull: false })
   login: string;
