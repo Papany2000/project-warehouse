@@ -31,5 +31,5 @@ export class Goods extends Model<Goods, GoodsCreationAttrs> {
   quantity: string;
   @ApiProperty({ example: 'полка', description: 'место зранения изделие' })
   @Column({ type: DataType.STRING, allowNull: false })
-  storageLocation: boolean;
+  storageLocation: string;
 }

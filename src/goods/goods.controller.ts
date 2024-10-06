@@ -22,7 +22,6 @@ export class GoodsController {
   @ApiResponse({ status: 200, type: Goods })
   @Get('/goods')
   getGoods(@Request() req: RequestWithUser) {
-    console.log(req.user.id)
     return this.goodsService.getAllGoods(req.user.id);
   }
 
