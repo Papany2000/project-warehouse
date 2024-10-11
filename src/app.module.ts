@@ -10,6 +10,7 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { GoodsModule } from './goods/goods.module';
 import { GoodsMiddleware } from './utils/goods.middleware';
+import { RecipesModule } from './recipes/recipes.module';
 
 @Module({
   imports: [
@@ -24,12 +25,18 @@ import { GoodsMiddleware } from './utils/goods.middleware';
       secret: 'some-JWTKEY-token-key',
       signOptions: { expiresIn: '1h' },
     }),
+    RecipesModule,
   ],
   controllers: [AppController],
   providers: [AppService],
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
-    consumer.apply(GoodsMiddleware).forRoutes({ path: 'goods', method: RequestMethod.ALL });
+    consumer
+      .apply(GoodsMiddleware)
+      .forRoutes(
+        { path: 'goods', method: RequestMethod.ALL },
+        { path: 'recipes', method: RequestMethod.ALL }
+      );
   }
 }

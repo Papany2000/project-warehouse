@@ -1,10 +1,11 @@
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
-import { Controller, Body, Post, Get, Param, Patch, Delete, Request } from '@nestjs/common';
+import { Controller, Body, Post, Get, Param, Patch, Delete, Request, UseGuards } from '@nestjs/common';
 
 import { Goods } from './goods.model';
 import { RequestWithUser } from '@/utils/goods.middleware';
 import { GoodsDTO } from './dto/create-goods.dto';
 import { GoodsService } from './goods.service';
+
 
 @ApiTags('Изделия')
 @Controller()

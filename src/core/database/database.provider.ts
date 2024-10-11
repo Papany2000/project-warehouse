@@ -3,6 +3,7 @@ import { SEQUELIZE, DEVELOPMENT, TEST } from './constant';
 import * as databaseConfig from '@/db/config.js';
 import { Goods } from 'src/goods/goods.model';
 import { User } from '@/users/users.model';
+import { Recipes } from '@/recipes/dto/recipes.model';
 
 export const databaseProviders = [
   {
@@ -20,7 +21,7 @@ export const databaseProviders = [
           config = databaseConfig.development;
       }
       const sequelize = new Sequelize(config);
-      sequelize.addModels([Goods, User]);
+      sequelize.addModels([Goods, User, Recipes]);
       await sequelize.sync();
       return sequelize;
     },

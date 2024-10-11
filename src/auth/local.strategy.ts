@@ -11,11 +11,17 @@ export class LocalStrategy extends PassportStrategy(Strategy) {
   }
 
   async validate(login: string, password: string): Promise<Partial<CreateUserDTO>> {
-    const user = await this.authService.validateUser(login, password);
-    if (!user) {
-      throw new UnauthorizedException('Invalid user credentials');
-    }
+    try {
+      const user = await this.authService.validateUser(login, password);
 
-    return user;
+      if (!user) {
+        throw new UnauthorizedException('Неверные учетные данные пользователя');
+      }
+
+      return user;
+    } catch (e) {
+      console.log('error', e)
+      throw e
+    }
   }
 }

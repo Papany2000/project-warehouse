@@ -7,6 +7,7 @@ import CORSPassThrough from 'src/utils/corse.middleware';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   app.use(CORSPassThrough);
+
   const config = new DocumentBuilder()
     .setTitle('Полезные мелочи')
     .setDescription('Организация поиска мелочей')

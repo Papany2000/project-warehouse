@@ -10,13 +10,21 @@ export interface RequestWithUser extends Request {
 
 @Injectable()
 export class GoodsMiddleware implements NestMiddleware {
-  constructor(private jwtService: JwtService) {}
+  constructor(private jwtService: JwtService) { }
   use(req: RequestWithUser, res: Response, next: NextFunction) {
     const token = req.get('authorization');
     if (token) {
-      const decoded = this.jwtService.verify(token);
-      req.user = decoded;
-      console.log(req.user)
+      try {
+        const decoded = this.jwtService.verify(token);
+        req.user = decoded;
+      } catch (e) {
+        res.status(401).json({
+          statusCode: 401,
+          error: 'Unauthorized',
+          message: 'Токен не действителен',
+        });
+        res.send()
+      }
     }
     next();
   }

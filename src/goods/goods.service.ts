@@ -4,6 +4,7 @@ import { Inject } from '@nestjs/common';
 import { GOODS_REPOSITORY, SEQUELIZE } from '@/core/database/constant';
 import { Goods } from './goods.model';
 import { GoodsDTO } from './dto/create-goods.dto';
+
 export class GoodsService {
   constructor(
     @Inject(SEQUELIZE) private readonly sequelize: Sequelize,
