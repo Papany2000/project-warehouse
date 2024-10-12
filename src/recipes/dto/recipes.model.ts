@@ -36,6 +36,9 @@ export class Recipes extends Model<Recipes, RecipesCreationAttrs> {
     @ApiProperty({ example: 'Url', description: 'ссылка на фото рецепта' })
     @Column({ type: DataType.STRING })
     photourl: string;
+    @ApiProperty({ example: 'true', description: 'Приватность рецепта' })
+    @Column({ type: DataType.BOOLEAN })
+    private: boolean;
     @ApiProperty({ example: 'рецепт', description: 'текстовое описание рецепта' })
     @Column({ type: DataType.TEXT, allowNull: false })
     recipes: string;

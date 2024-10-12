@@ -20,7 +20,7 @@ export class RecipesController {
     @ApiResponse({ status: 200, type: Recipes })
     @Get('/recipes/all')
     getRecipes() {
-        return this.recipesService.getAllRecipes();
+        return this.recipesService.getPublicRecipes();
     }
 
     @ApiOperation({ summary: 'Получение рецептов пользователя ' })

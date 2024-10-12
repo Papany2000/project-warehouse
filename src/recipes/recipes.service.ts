@@ -17,8 +17,12 @@ export class RecipesService {
         return recipes;
     }
 
-    async getAllRecipes() {
-        const recipes = await this.recipesRepository.findAll();
+    async getPublicRecipes() {
+        const recipes = await this.recipesRepository.findAll({
+            where: {
+                private: false
+            }
+        });
         return recipes;
     }
 
