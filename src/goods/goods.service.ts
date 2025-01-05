@@ -6,6 +6,7 @@ import { Goods } from './goods.model';
 import { GoodsDTO } from './dto/create-goods.dto';
 
 export class GoodsService {
+  // внедряем через constructor все методы и свойства классов Sequelize и Goods
   constructor(
     @Inject(SEQUELIZE) private readonly sequelize: Sequelize,
     @Inject(GOODS_REPOSITORY) private readonly goodsRepository: typeof Goods,

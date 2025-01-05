@@ -10,6 +10,7 @@ interface GoodsCreationAttrs {
 }
 
 @Table({ tableName: 'goods' })
+  // создадим на основе абстрактного класса Model класс Goods (это и есть репозиторий).
 export class Goods extends Model<Goods, GoodsCreationAttrs> {
   @ApiProperty({ example: 'b231-c96', description: 'идентификатор' })
   @Column({

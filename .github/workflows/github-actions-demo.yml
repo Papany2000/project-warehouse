@@ -1,0 +1,33 @@
+name: GitHub Actions Demo
+run-name: ${{ github.actor }} is testing out GitHub Actions 🚀
+on: [push]
+jobs:
+  init:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node version: [23.5.0]
+    
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup Go '23.5.0'
+        uses: actions/setup-go@v5
+        with:
+          go-version: '23.5.0'
+      # You can test your matrix by printing the current Go version
+      - name: install module
+        run: npm install
+      - name: build project
+        run: npm nest build
+      - name: lint
+        run: npm eslint 'src/**/*.ts'
+      - name: lint fix
+        run: npm eslint 'src/**/*.ts' --fix
+      - name: test cov
+        run: jest --coverage
+      - name:  test watch
+        run: run jest --coverage
+      - name: test debug
+        run: run node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand
+      - name: test e2e
+        run: run jest --config ./test/jest-e2e.json"

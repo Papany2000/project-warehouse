@@ -20,9 +20,15 @@ export const databaseProviders = [
         default:
           config = databaseConfig.development;
       }
+      // создаём экземпляр класса Sequelize
       const sequelize = new Sequelize(config);
+      // добавляем модели
       sequelize.addModels([Goods, User, Recipes]);
+      // синхронизации базы данных
+      //  Sequelize автоматически создаёт таблицу  в соответствии с определением  модели
+      //  В рабочей среде вместо вызова sync() в коде лучше использовать миграции.
       await sequelize.sync();
+      // возвращаем экземпляр classa sequelize
       return sequelize;
     },
   },

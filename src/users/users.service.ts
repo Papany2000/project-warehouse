@@ -1,4 +1,4 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { ConflictException, Inject, Injectable } from '@nestjs/common';
 import { Sequelize } from 'sequelize';
 
 import { User } from './users.model';
@@ -11,7 +11,20 @@ export class UsersService {
     @Inject(SEQUELIZE) private readonly sequelize: Sequelize,
     @Inject(USERS_REPOSITORY) private readonly userRepository: typeof User,
   ) {}
+ /* async CreateUser(dto: CreateUserDTO) {
+    const user = await this.userRepository.create(dto, { raw: true });
+    return user.toJSON();
+  }*/
+
   async CreateUser(dto: CreateUserDTO) {
+    // Сначала проверяем, существует ли пользователь с таким логином
+    const existingUser = await this.findOneByLogin(dto.login);
+    if (existingUser) {
+      // Логин уже занят, выбрасываем исключение
+      throw new ConflictException('Логин уже занят');
+    }
+
+    // Если логин свободен, создаем нового пользователя
     const user = await this.userRepository.create(dto, { raw: true });
     return user.toJSON();
   }
